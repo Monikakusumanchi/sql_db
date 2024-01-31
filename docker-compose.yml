@@ -11,8 +11,10 @@ services:
       MYSQL_PASSWORD: mypassword
     ports:
       - "3306:3306"
-    networks:
-      - my_network
+    command: ["--local-infile"]
+    volumes:
+      - /workspace/sql_db/mysql:/etc/mysql/conf.d
+
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -24,5 +26,6 @@ services:
       - "8080:80"
     depends_on:
       - mysql
-networks:
-  my_network:
+    volumes:
+      - /workspace/sql_db/config.inc.php:/config.inc.php
+      
